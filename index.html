@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>InstantMod - Apps & Games</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101410;color:#f5f5f5;font-family:Arial,sans-serif}
+header{background:#182019;padding:20px 16px;border-bottom:1px solid #29352b}
+.logo{font-size:27px;font-weight:bold;color:#71f58b}
+.logo span{color:white}
+header p{color:#b7c5b8;font-size:13px}
+main{max-width:900px;margin:auto;padding:18px 14px}
+input{width:100%;padding:14px;border-radius:10px;border:1px solid #39463b;background:#202820;color:white;font-size:16px}
+nav{display:flex;gap:10px;margin:18px 0}
+nav button,.download{border:0;border-radius:8px;background:#50d96c;color:#08120a;padding:11px 16px;font-weight:bold}
+nav button{flex:1}
+h2{font-size:20px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{background:#1b241c;border:1px solid #303c31;border-radius:12px;padding:14px}
+.appicon{font-size:32px}
+.card h3{margin:10px 0 6px;font-size:16px}
+.card p{font-size:12px;color:#b5c2b6;line-height:1.5}
+.download{display:block;text-align:center;text-decoration:none;margin-top:12px;font-size:13px}
+.note{color:#aab5aa;font-size:12px;line-height:1.6;margin-top:22px}
+footer{text-align:center;padding:24px;color:#9eaa9f;font-size:12px}
+@media(min-width:600px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Instant<span>Mod</span></div>
+  <p>Discover apps and games in one place</p>
+</header>
+<main>
+  <input id="search" type="search" placeholder="Search apps and games...">
+  <nav>
+    <button onclick="filterApps('All')">All</button>
+    <button onclick="filterApps('Apps')">Apps</button>
+    <button onclick="filterApps('Games')">Games</button>
+  </nav>
+  <h2>Latest Apps & Games</h2>
+  <div class="grid" id="grid"></div>
+  <p class="note">Only download apps from trusted, authorized sources. Verify files before installing. This website is an independent listing demo.</p>
+</main>
+<footer>© 2026 InstantMod</footer>
+<script>
+const apps=[
+ {name:"Example App",category:"Apps",icon:"📱",version:"1.0",size:"25 MB"},
+ {name:"Example Game",category:"Games",icon:"🎮",version:"1.0",size:"80 MB"},
+ {name:"Utility Tool",category:"Apps",icon:"🛠️",version:"1.0",size:"12 MB"},
+ {name:"Arcade Game",category:"Games",icon:"🚀",version:"1.0",size:"45 MB"}
+];
+let category="All";
+function render(){
+ const term=document.getElementById("search").value.toLowerCase();
+ const list=apps.filter(a=>(category==="All"||a.category===category)&&a.name.toLowerCase().includes(term));
+ document.getElementById("grid").innerHTML=list.map(a=>`
+ <article class="card">
+ <div class="appicon">${a.icon}</div>
+ <h3>${a.name}</h3>
+ <p>${a.category} · Version ${a.version}<br>${a.size}</p>
+ <a class="download" href="https://www.google.com/" target="_blank" rel="noopener">View details</a>
+ </article>`).join("")||"<p>No apps found.</p>";
+}
+function filterApps(c){category=c;render()}
+document.getElementById("search").addEventListener("input",render);
+render();
+</script>
+</body>
+</html>
